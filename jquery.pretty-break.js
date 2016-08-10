@@ -13,10 +13,10 @@ $.fn.prettyBreak = function () {
 
         const splitText = function () {
 
-            const parentWidth = element.parent().width();
+            const textWrapper = element.width();
             const textHeight = element.find("span").height();
 
-            if (textWidth > parentWidth && textHeight < lineHeight * 3) {
+            if (textWidth > textWrapper && textHeight < lineHeight * 3) {
 
                 let middle = Math.floor(elementText.length / 2);
                 const before = elementText.lastIndexOf(" ", middle);
