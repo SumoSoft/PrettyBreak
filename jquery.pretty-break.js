@@ -38,9 +38,7 @@ $.fn.prettyBreak = function () {
             }
         };
 
-        splitText();
-
-        $(window).resize(function () {
+        $(window).on("load resize", function () {
 
             splitText();
 
