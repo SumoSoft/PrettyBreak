@@ -1,22 +1,22 @@
+
 $.fn.prettyBreak = function () {
 
     return this.each(function () {
 
         var element = $(this);
 
-        element.wrapInner("<span style='white-space: nowrap'>");
-        const textWidth = element.find("span").width();
-        const lineHeight = element.find("span").height();
-        element.find("span").removeAttr("style");
-
-        const elementText = $.trim(element.text());
+        const clone = element.clone();
+        clone.css("visibility", "hidden");
+        clone.wrapInner("<span style='white-space: nowrap'>");
+        element.parent().append(clone);
+        const textWidth = clone.find("span").width();
+        clone.remove();
 
         const splitText = function () {
 
-            const textWrapper = element.width();
-            const textHeight = element.find("span").height();
+            const elementText = $.trim(element.text());
 
-            if (textWidth > textWrapper && textHeight < lineHeight * 3) {
+            if (textWidth > element.width()) {
 
                 let middle = Math.floor(elementText.length / 2);
                 const before = elementText.lastIndexOf(" ", middle);
@@ -31,10 +31,10 @@ $.fn.prettyBreak = function () {
                 const s1 = elementText.substr(0, middle);
                 const s2 = elementText.substr(middle + 1);
 
-                element.find("span").html(s1 + "<br>" + s2);
+                element.html(s1 + "<br>" + s2);
 
             } else {
-                element.find("span").html(elementText);
+                element.html(elementText);
             }
         };
 
