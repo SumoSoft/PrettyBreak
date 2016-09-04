@@ -1,47 +1,52 @@
-
 $.fn.prettyBreak = function () {
 
     return this.each(function () {
 
         var element = $(this);
 
-        const clone = element.clone();
-        clone.css("visibility", "hidden");
-        clone.wrapInner("<span style='white-space: nowrap'>");
-        element.parent().append(clone);
-        const textWidth = clone.find("span").width();
-        clone.remove();
+        var elementContent = element.contents();
 
-        const splitText = function () {
+        element.wrapInner("<span style='white-space: nowrap'>");
+        element.find("br").remove();
+        var textWidth = element.find("span").width();
+        var lineHeight = element.find("span").innerHeight();
 
-            const elementText = $.trim(element.text());
+        element.html(elementContent);
 
-            if (textWidth > element.width()) {
+        var elementText = $.trim(element.text());
 
-                let middle = Math.floor(elementText.length / 2);
-                const before = elementText.lastIndexOf(" ", middle);
-                const after = elementText.indexOf(" ", middle + 1);
+        if (element.is(":visible") && textWidth > element.width() && element.height() < lineHeight * 3.5) {
 
-                if (middle - before < after - middle) {
-                    middle = before;
-                } else {
-                    middle = after;
-                }
+            var middle = Math.floor(elementText.length / 2);
+            var before = elementText.lastIndexOf(" ", middle);
+            var after = elementText.indexOf(" ", middle + 1);
 
-                const s1 = elementText.substr(0, middle);
-                const s2 = elementText.substr(middle + 1);
-
-                element.html(s1 + "<br>" + s2);
-
+            if (middle - before < after - middle) {
+                middle = before;
             } else {
-                element.html(elementText);
+                middle = after;
             }
-        };
 
-        $(window).on("load resize", function () {
+            var s1 = elementText.substr(0, middle);
+            var s2 = elementText.substr(middle + 1);
 
-            splitText();
+            element.html(s1 + "<br> " + s2); // note the space after the tag
 
-        });
+        } else {
+            element.html(elementText);
+        }
+
+        if (element.is(":visible")) {
+            element.css("opacity", 1);
+        }
+
     });
 }
+
+$(document).on("ready", function () {
+    $(".pretty-break:visible").prettyBreak();
+
+    setInterval(function () {
+        $(".pretty-break:visible").prettyBreak();
+    }, 1000);
+});
