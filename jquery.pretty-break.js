@@ -4,18 +4,21 @@ $.fn.prettyBreak = function () {
 
         var element = $(this);
 
+        var elementLineHeight = element.css("line-height").replace("px", "");
+
         var elementContent = element.contents();
 
         element.wrapInner("<span style='white-space: nowrap'>");
+
         element.find("br").remove();
+
         var textWidth = element.find("span").width();
-        var lineHeight = element.find("span").innerHeight();
 
         element.html(elementContent);
 
         var elementText = $.trim(element.text());
 
-        if (element.is(":visible") && textWidth > element.width() && element.height() < lineHeight * 3.5) {
+        if (element.is(":visible") && textWidth > element.width() && element.height() < elementLineHeight * 2.1) {
 
             var middle = Math.floor(elementText.length / 2);
             var before = elementText.lastIndexOf(" ", middle);
