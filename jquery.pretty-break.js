@@ -46,6 +46,9 @@ $.fn.prettyBreak = function () {
     });
 }
 
+// Initialise on fixed intervals to make sure the plugin 
+// will work on dynamically generated elements
+
 $(document).on("ready", function () {
     $(".pretty-break:visible").prettyBreak();
 
@@ -53,3 +56,5 @@ $(document).on("ready", function () {
         $(".pretty-break:visible").prettyBreak();
     }, 1000);
 });
+
+// Note: create a css rule for .pretty-break {opacity:0}
