@@ -21,8 +21,3 @@ By using PrettyBreak, you ensure that whenever a title is longer than its contai
 <br>
 > text to break nicely in the middle.
 
-## Usage
-```
-$("h1").prettyBreak();
-```
-
