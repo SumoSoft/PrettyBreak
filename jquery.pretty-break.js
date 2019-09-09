@@ -6,6 +6,9 @@ $.fn.prettyBreak = function() {
 		element.wrapInner("<span style='white-space: nowrap'>");
 		const textWidth = element.find("span").width();
 		element.html(elementContent);
+		if (textWidth / 2 > element.parent().width()) {
+                	return;
+            	}
 		const elementText = $.trim(element.text());
 		if (textWidth > element.width()) {
 			let middle = Math.floor(elementText.length / 2);
